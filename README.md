@@ -12,3 +12,6 @@ if you wanna set up a new directory to add un cleaned files to, you should use t
 along with the `--ext` option specifying the extensions that go in to the directory as a space separated list.
 
 `python arrange.py --add_dir '/full/path/to/dir' --ext ext1 ext2 ...`
+
+If you want to clean all the folders in the home directory, use the `--all`
+flag.
