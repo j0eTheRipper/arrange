@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from os import listdir
-from os.path import isdir, abspath
+from os.path import abspath
 from argparse import ArgumentParser
 
 from classes.DIR import DIR
@@ -26,7 +26,6 @@ home = '/'.join(home)
 
 
 def clean_dir(target_dir):
-	target_dir = f'{home}/{target_dir}'
 	dir_contents = listdir(target_dir)
 	for file_ in dir_contents:
 		file = File(f'{target_dir}/{file_}', f'{home}/.config')
@@ -35,7 +34,10 @@ def clean_dir(target_dir):
 
 # User commands
 if args.dir:
-	clean_dir(args.dir)
+	try:
+		clean_dir(args.dir)
+	except FileNotFoundError:
+		print('Please enter a valid directory.')
 elif args.add_dir:
 	if args.ext:
 		ext = (args.ext.split())
@@ -46,4 +48,4 @@ elif args.add_dir:
 elif args.ext and not args.add_dir:
 	print('Cannot use --ext alone! Refer to help for more')
 else:
-	clean_dir(f'Downloads')
+	clean_dir(f'/home/j0e/Downloads')
