@@ -4,14 +4,15 @@ from os.path import isdir
 
 
 class DIR:
-	def __init__(self, path, extensions):
+	def __init__(self, path, extensions, config_file):
 		self.path = path
 		self.extensions = extensions
+		self.config = f'{config_file}/config.json'
 		self.extensions_file = None
 
 	def get_existing_extensions(self):
 		try:
-			with open('.extensions.json') as extensions:
+			with open(self.config) as extensions:
 				self.extensions_file = load(extensions)
 		except FileNotFoundError:
 			self.extensions_file = dict()
@@ -22,7 +23,7 @@ class DIR:
 		else:
 			self.extensions_file[self.path] = self.extensions
 
-		with open('.extensions.json', 'w') as extensions:
+		with open(self.config, 'w') as extensions:
 			dump(self.extensions_file, extensions)
 
 	def dir_setup(self):

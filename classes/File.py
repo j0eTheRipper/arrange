@@ -3,15 +3,15 @@ from os import rename as mv
 
 
 class File:
-	def __init__(self, path):
+	def __init__(self, path, config_path):
 		self.path = path
 		self.name = self.path.split('/')[-1]
 		self.extension = self.path.split('.')[-1]
+		self.config = f'{config_path}/config.json'
 		self.destination = ''
 
-	@staticmethod
-	def get_extensions():
-		with open('.extensions.json', 'r') as extensions:
+	def get_extensions(self):
+		with open(self.config, 'r') as extensions:
 			dir_ext = load(extensions)
 
 		return dir_ext
