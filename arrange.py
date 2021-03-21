@@ -40,7 +40,7 @@ if args.dir:
 		print('Please enter a valid directory.')
 elif args.add_dir:
 	if args.ext:
-		ext = (args.ext.split())
+		ext = args.ext.split('-')
 		new_dir = DIR(args.add_dir, ext, f'{home}/.config')
 		new_dir.dir_setup()
 	else:
