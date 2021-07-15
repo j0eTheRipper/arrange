@@ -4,7 +4,7 @@ from os import listdir
 from os.path import abspath
 from argparse import ArgumentParser
 
-from classes.DIR import DIR
+from classes.Extensions import DIR
 from classes.File import File
 
 add_dir_help = '''set up a directory to add files to.
