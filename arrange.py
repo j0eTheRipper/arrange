@@ -29,7 +29,7 @@ def clean_dir(target_dir):
 	dir_contents = listdir(target_dir)
 	for file_ in dir_contents:
 		file = File(f'{target_dir}/{file_}', f'{home}/.config')
-		file.operate()
+        file.main()
 
 
 # User commands
