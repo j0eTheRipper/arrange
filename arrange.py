@@ -1,51 +1,65 @@
 #!/usr/bin/env python3
 
 from os import listdir
-from os.path import abspath
+from os.path import abspath, isfile
 from argparse import ArgumentParser
-
-from classes.Extensions import DIR
+from sys import exit
+from classes.Extensions import Extensions
 from classes.File import File
+from classes.DIR import DIR
 
-add_dir_help = '''set up a directory to add files to.
-When this is used, --ext option has to be used, to specify
-the extensions that goes in the new directory'''
 
-ext_help = '''A space separated  of extensions that go into the new directory
-specified using the add_dir option.
-NOTE, this is not to be used alone. it has to be used with the --add-dir option.'''
+add_dir_help = 'Specify a directory for the program to put files into'
 
-parser = ArgumentParser(description='Arrange the given dir')
+ext_help = 'A hyphen (-) separated list of file extensions that go into the directory specified by the --add_dir option'
+
+parser = ArgumentParser(description='Arrange the given directory')
 parser.add_argument('--dir', help='specify a directory to clean (default: Downloads)')
 parser.add_argument('--add_dir', help=add_dir_help)
+parser.add_argument('--del_dir', help='Omit the directory with its extensions from the cleaning process')
 parser.add_argument('--ext', help=ext_help)
 args = parser.parse_args()
 
 home = abspath(__name__).split('/')[:3:]
 home = '/'.join(home)
+json_file_path = f'{home}/.config/arrange.json'
 
 
 def clean_dir(target_dir):
-	dir_contents = listdir(target_dir)
-	for file_ in dir_contents:
-		file = File(f'{target_dir}/{file_}', f'{home}/.config')
+    target_dir = abspath(target_dir)
+    dir_contents = listdir(target_dir)
+    for file_ in dir_contents:
+        file = File(f'{target_dir}/{file_}', json_file_path)
         file.main()
 
 
+def update_json(directory, extensions):
+    extensions = set(extensions.split('-'))
+    directory = abspath(directory)
+    Extensions(directory, extensions, json_file_path)
+    new_dir = DIR(directory)
+    new_dir.create_directory()
+
+
+if not isfile(json_file_path) and (args.ext and args.add_dir):
+    update_json(args.add_dir, args.ext)
+else:
+    print("""Please specify the extensions:
+    ./arrange --add_dir [path to directory] --ext exts-to-add-to-directory.""")
+    exit()
+
 # User commands
 if args.dir:
-	try:
-		clean_dir(args.dir)
-	except FileNotFoundError:
-		print('Please enter a valid directory.')
+    try:
+        clean_dir(args.dir)
+    except FileNotFoundError:
+        print('Please enter a valid directory.')
 elif args.add_dir:
-	if args.ext:
-		ext = args.ext.split('-')
-		new_dir = DIR(args.add_dir, ext, f'{home}/.config')
-		new_dir.dir_setup()
-	else:
-		print("Please use --ext option to specify the new directory's extensions")
+    if args.ext:
+        update_json(args.add_dir, args.ext)
+    else:
+        print("Please use --ext option to specify the new directory's extensions")
 elif args.ext and not args.add_dir:
-	print('Cannot use --ext alone! Refer to help for more')
+    print('Please use --add_dir to specify the directory for the extensions')
 else:
-	clean_dir(f'/home/j0e/Downloads')
+    clean_dir(f'{home}/Downloads')

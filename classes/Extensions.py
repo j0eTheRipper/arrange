@@ -3,12 +3,12 @@ from json import load, dump
 
 
 class Extensions:
-    def __init__(self, directory_for_extensions, extensions):
+    def __init__(self, directory_for_extensions, extensions, json_file_path):
         """add new extensions to the json __file_path"""
         self.__directory = directory_for_extensions
         self.__extensions = set(extensions)
         self.__extensions_file = {}
-        self._extensions_file_path = 'arrange.json'
+        self._extensions_file_path = json_file_path
 
         self.__get_existing_extensions()
         self.add_extensions(self.__extensions)
