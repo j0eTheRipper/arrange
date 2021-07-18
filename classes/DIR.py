@@ -14,12 +14,6 @@ class DIR:
         except FileExistsError:
             pass
 
-    def delete_directory(self):
-        try:
-            rmdir(self.dir_path)
-        except FileNotFoundError:
-            pass
-
     def update_directory_path(self, new_path):
         self.dir_parent = f'{abspath(new_path)}/{self.dir_name}'
 
