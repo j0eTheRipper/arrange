@@ -3,19 +3,25 @@ from json import load, dump
 
 
 class Extensions:
-    def __init__(self, directory_for_extensions, extensions, json_file_path):
-        """add new extensions to the json __file_path"""
-        self.__directory = directory_for_extensions
-        self.__extensions = set(extensions)
-        self.__extensions_file = {}
-        self._extensions_file_path = json_file_path
+    def __init__(self, json_file_path, directory_for_extensions=None, extensions=None):
+        """
+        Loads the extensions file.
+        If "directory_for_extensions" and "extensions" were specified, we save them to the json file.
+        """
 
+        self._extensions_file_path = json_file_path
+        self.__extensions_file = {}
         self.__get_existing_extensions()
-        self.add_extensions(self.__extensions)
-        self.write_json_file()
+
+        if directory_for_extensions and extensions:
+            self.__directory = directory_for_extensions
+            self.__extensions = set(extensions)
+
+            self.add_extensions(self.__extensions)
+            self.write_json_file()
 
     def __get_existing_extensions(self):
-        """Get the extensions from the json __file_path, if not created yet, Initialize json object"""
+        """Load extensions from json file to the extensions_file dictionary"""
         try:
             with open(self._extensions_file_path, 'r') as extensions:
                 x = load(extensions)
@@ -31,6 +37,10 @@ class Extensions:
     def remove_extensions(self, extensions: set):
         extensions = set(extensions)
         self.__extensions_file[self.__directory] = self.__extensions_file[self.__directory] - extensions
+
+    def remove_directory(self, directory: str):
+        if self.__extensions_file.get(directory):
+            del self.__extensions_file[directory]
 
     def write_json_file(self):
         """Writes the json object to the json __file_path"""
