@@ -1,4 +1,4 @@
-from os import mkdir, listdir, rmdir, rename, makedirs
+from os import mkdir, rename, makedirs
 from os.path import abspath
 
 

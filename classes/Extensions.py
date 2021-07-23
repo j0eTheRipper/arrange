@@ -29,14 +29,14 @@ class Extensions:
         except FileNotFoundError:
             pass
 
-    def add_extensions(self, extensions: set):
+    def add_extensions(self, directory: str, extensions: set):
         """Adds the extensions to the json object"""
         self.__extensions_file = defaultdict(set, self.__extensions_file)
-        self.__extensions_file[self.__directory] = self.__extensions_file[self.__directory] | extensions
+        self.__extensions_file[directory] = self.__extensions_file[directory] | extensions
 
-    def remove_extensions(self, extensions: set):
+    def remove_extensions(self, directory: str, extensions: set):
         extensions = set(extensions)
-        self.__extensions_file[self.__directory] = self.__extensions_file[self.__directory] - extensions
+        self.__extensions_file[directory] = self.__extensions_file[directory] - extensions
 
     def remove_directory(self, directory: str):
         if self.__extensions_file.get(directory):
