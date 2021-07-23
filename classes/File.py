@@ -4,9 +4,9 @@ from os import rename as mv
 
 class File:
     def __init__(self, file_path, json_file_path):
-        self.__file_path = file_path
-        self.__file_name = self.__file_path.split('/')[-1]
-        self.__file_extension = self.__file_path.split('.')[-1]
+        self.file_path = file_path
+        self.__file_name = self.file_path.split('/')[-1]
+        self.__file_extension = self.file_path.split('.')[-1]
         self.__json_file = json_file_path
         self.__destination = ''
 
@@ -35,6 +35,6 @@ class File:
     def __move_file_to_destination(self):
         """moves the given file to the destination."""
         try:
-            mv(self.__file_path, f'{self.__destination}/{self.__file_name}')
+            mv(self.file_path, f'{self.__destination}/{self.__file_name}')
         except FileNotFoundError:
             pass
