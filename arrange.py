@@ -57,7 +57,7 @@ def main():
             exit()
     elif args.remove_ext:
         if args.dir:
-            directory, extensions_set = setup(args.dir, args.add_ext)
+            directory, extensions_set = setup(args.dir, args.remove_ext)
 
             ext.remove_extensions(directory, extensions_set)
             ext.write_json_file()
@@ -81,7 +81,6 @@ def clean_directory(directory):
     for file in listdir(directory):
         file = f'{directory}/{file}'
         file = File(file, json_file_path)
-        print(file.file_path)
         file.main()
 
 
@@ -98,6 +97,7 @@ def setup_extensions_set(extensions):
 
 def setup_dir(directory):
     directory = DIR(directory)
+    directory.create_directory()
     return directory.dir_path
 
 
