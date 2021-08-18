@@ -14,10 +14,9 @@ class Extensions:
         self.__get_existing_extensions()
 
         if directory_for_extensions and extensions:
-            self.__directory = directory_for_extensions
-            self.__extensions = set(extensions)
+            extensions = set(extensions)
 
-            self.add_extensions(self.__directory, self.__extensions)
+            self.add_extensions(directory_for_extensions, extensions)
             self.write_json_file()
 
     def __get_existing_extensions(self):
