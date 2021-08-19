@@ -1,4 +1,4 @@
-from os import mkdir, rename, makedirs
+from os import mkdir
 from os.path import abspath
 
 
@@ -13,14 +13,3 @@ class DIR:
             mkdir(self.dir_path)
         except FileExistsError:
             pass
-
-    def update_directory_path(self, new_path):
-        self.dir_parent = f'{abspath(new_path)}/{self.dir_name}'
-
-        try:
-            rename(self.dir_path, self.dir_parent)
-        except FileNotFoundError:
-            print('Exception is being handled')
-            makedirs(self.dir_parent)
-        # finally:
-            rename(self.dir_path, self.dir_parent)

@@ -10,7 +10,7 @@ class Extensions:
         """
 
         self._extensions_file_path = json_file_path
-        self.__extensions_file = {}
+        self.extensions = {}
         self.__get_existing_extensions()
 
         if directory_for_extensions and extensions:
@@ -24,28 +24,28 @@ class Extensions:
         try:
             with open(self._extensions_file_path, 'r') as extensions:
                 x = load(extensions)
-                self.__extensions_file = {directory: set(extension) for directory, extension in x.items()}
+                self.extensions = {directory: set(extension) for directory, extension in x.items()}
         except FileNotFoundError:
             pass
 
     def add_extensions(self, directory: str, extensions: set):
         """Adds the extensions to the json object"""
-        self.__extensions_file = defaultdict(set, self.__extensions_file)
-        self.__extensions_file[directory] = self.__extensions_file[directory] | extensions
+        self.extensions = defaultdict(set, self.extensions)
+        self.extensions[directory] = self.extensions[directory] | extensions
 
     def remove_extensions(self, directory: str, extensions: set):
         extensions = set(extensions)
-        self.__extensions_file[directory] = self.__extensions_file[directory] - extensions
+        self.extensions[directory] = self.extensions[directory] - extensions
 
     def remove_directory(self, directory: str):
-        if self.__extensions_file.get(directory):
-            del self.__extensions_file[directory]
+        if self.extensions.get(directory):
+            del self.extensions[directory]
 
     def write_json_file(self):
         """Writes the json object to the json __file_path"""
 
         # turns all the extension sets into lists since json doesn't work with sets
-        extensions_list = {directory: list(extensions) for directory, extensions in self.__extensions_file.items()}
+        extensions_list = {directory: list(extensions) for directory, extensions in self.extensions.items()}
 
         with open(self._extensions_file_path, 'w') as extensions:
             dump(extensions_list, extensions)
