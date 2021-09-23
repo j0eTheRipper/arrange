@@ -1,6 +1,8 @@
 from collections import defaultdict
 from json import load, dump
 
+from classes.DIR import DIR
+
 
 class Extensions:
     def __init__(self, json_file_path, directory_for_extensions=None, extensions=None):
@@ -15,6 +17,7 @@ class Extensions:
 
         if directory_for_extensions and extensions:
             extensions = set(extensions)
+            directory_for_extensions = DIR(directory_for_extensions)
 
             self.add_extensions(directory_for_extensions, extensions)
             self.write_json_file()
@@ -28,18 +31,23 @@ class Extensions:
         except FileNotFoundError:
             pass
 
-    def add_extensions(self, directory: str, extensions: set):
-        """Adds the extensions to the json object"""
+    def add_extensions(self, directory: DIR, extensions: set):
+        """Adds the extensions to the json object without writing to the file"""
         self.extensions = defaultdict(set, self.extensions)
-        self.extensions[directory] = self.extensions[directory] | extensions
 
-    def remove_extensions(self, directory: str, extensions: set):
+        for ancestor in directory.dir_ancestors:
+            if ancestor in self.extensions:
+                self.extensions[ancestor] -= extensions
+
+        self.extensions[directory.dir_path] |= extensions
+
+    def remove_extensions(self, directory: DIR, extensions: set):
         extensions = set(extensions)
-        self.extensions[directory] = self.extensions[directory] - extensions
+        self.extensions[directory.dir_path] -= extensions
 
-    def remove_directory(self, directory: str):
-        if self.extensions.get(directory):
-            del self.extensions[directory]
+    def remove_directory(self, directory: DIR):
+        if self.extensions.get(directory.dir_path):
+            del self.extensions[directory.dir_path]
 
     def write_json_file(self):
         """Writes the json object to the json __file_path"""

@@ -1,5 +1,5 @@
 from os import mkdir
-from os.path import abspath, expanduser
+from os.path import abspath
 
 
 class DIR:
