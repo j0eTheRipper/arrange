@@ -59,7 +59,7 @@ def main():
     elif args.clean_directory:
         directory = setup_dir(args.clean_directory)
 
-        clean_directory(directory)
+        clean_directory(directory.dir_path)
     else:
         clean_directory(f'{home}/Downloads')
 
