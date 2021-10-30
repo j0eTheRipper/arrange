@@ -1,5 +1,6 @@
 from json import load
 from os import rename as mv
+from ..DIR.DIR import DIR
 
 
 class File:
@@ -24,7 +25,7 @@ class File:
         return dir_ext
 
     def __get_file_destination(self):
-        """Finds the directory to where the file would go. """
+        """Finds the directory to where the file would go."""
         dir_ext = self.__get_directory_to_extensions_dict()
 
         for directory, extensions in dir_ext.items():
@@ -37,4 +38,6 @@ class File:
         try:
             mv(self.file_path, f'{self.__destination}/{self.__file_name}')
         except FileNotFoundError:
-            pass
+            directory = DIR(self.__destination)
+            directory.create_directory()
+            mv(self.file_path, f'{self.__destination}/{self.__file_name}')

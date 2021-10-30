@@ -17,8 +17,6 @@ parser.add_argument('-re', '--remove_ext',
                     help='Omit a hyphen separated list of filetypes from being cleaned (specified using -d)')
 parser.add_argument('-r', '--remove_directory',
                     help='Omit the given directory having filetypes added to')
-parser.add_argument('-c', '--clean_directory',
-                    help='Clean the given directory')
 
 args = parser.parse_args()
 
@@ -29,6 +27,8 @@ ext = Extensions(json_file_path)
 
 def main():
     global args
+
+    clean_dir = args.dir and not (args.add_ext or args.remove_ext or args.remove_directory)
 
     if not isfile(json_file_path):
         setup_json()
@@ -56,8 +56,8 @@ def main():
 
         ext.remove_directory(directory)
         ext.write_json_file()
-    elif args.clean_directory:
-        directory = setup_dir(args.clean_directory)
+    elif clean_dir:
+        directory = setup_dir(args.dir)
 
         clean_directory(directory.dir_path)
     else:
