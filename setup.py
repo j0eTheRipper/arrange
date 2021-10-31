@@ -8,7 +8,7 @@ setup(
         author='j0eTheRipper',
         author_email='j0eTheRipper0010@gmail.com',
         url='https://github.com/j0eTheRipper/arrange',
-        py_modules=['arrange'],
+        scripts=['bin/arrange'],
         packages=['engine', 'engine.Extensions', 'engine.File', 'engine.DIR'],
         package_dir={'': 'src', 'engine': 'src/engine'},
 )
