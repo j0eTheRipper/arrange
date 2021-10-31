@@ -102,5 +102,5 @@ def setup_dir(directory):
     return directory
 
 
-if __name__ == '__main__':
-    main()
+# if "__main__" == __name__:
+#     main()
