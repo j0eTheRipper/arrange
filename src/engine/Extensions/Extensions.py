@@ -1,7 +1,6 @@
 from collections import defaultdict
 from json import load, dump
-
-from engine.DIR.DIR import DIR
+from ..DIR.DIR import DIR
 
 
 class Extensions:
@@ -44,6 +43,8 @@ class Extensions:
     def remove_extensions(self, directory: DIR, extensions: set):
         extensions = set(extensions)
         self.extensions[directory.dir_path] -= extensions
+        if not len(self.extensions[directory.dir_path]):
+            del self.extensions[directory.dir_path]
 
     def remove_directory(self, directory: DIR):
         if self.extensions.get(directory.dir_path):

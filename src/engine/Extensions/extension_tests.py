@@ -64,7 +64,6 @@ def test_dir_removal():
 def test_extension_re_addition():
     remove_json_file()
     ext = Extensions('./arrange.json', 'abc', {'alpha', 'beta', 'gama'})
-    ext.write_json_file()
     ext.add_extensions(DIR('abc/b'), {'beta'})
     ext.write_json_file()
 
@@ -73,6 +72,19 @@ def test_extension_re_addition():
         assert x[DIR('abc/b').dir_path] == ['beta'] \
                and \
                set(x[DIR('abc').dir_path]) == {'alpha', 'gama'}
+    remove_json_file()
+
+
+def test_removing_the_only_extension():
+    """testing the removal of the only extension in an extension list."""
+    remove_json_file()
+    ext = Extensions('./arrange.json', 'abc', {'abc'})
+    ext.remove_extensions(DIR('abc'), {'abc'})
+    ext.write_json_file()
+
+    with open('./arrange.json') as json_file:
+        file = load(json_file)
+        assert file == {}
     remove_json_file()
 
 
