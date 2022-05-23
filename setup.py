@@ -1,10 +1,10 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 setup(
         name='arranger',
-        version='1.0.0',
-        description="moves each file to its appropriate directory based on the fil's extension.",
+        version='1.1.0',
+        description="moves each file to its appropriate directory based on the file's extension.",
         author='j0eTheRipper',
         author_email='j0eTheRipper0010@gmail.com',
         url='https://github.com/j0eTheRipper/arranger',

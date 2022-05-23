@@ -4,9 +4,9 @@ from os.path import isfile, expanduser
 from argparse import ArgumentParser
 from sys import exit
 
-from engine.DIR.DIR import DIR
-from engine.Extensions.Extensions import Extensions
-from engine.File.File import File
+from src.engine.DIR.DIR import DIR
+from src.engine.Extensions.Extensions import Extensions
+from src.engine.File.File import File
 
 parser = ArgumentParser(description='Arrange the given directory')
 parser.add_argument('-d', '--dir', help='For specifying a directory')
@@ -20,8 +20,8 @@ parser.add_argument('-r', '--remove_directory',
 
 args = parser.parse_args()
 
-home = expanduser('~')
-json_file_path = f'{home}/.config/arrange.json'
+HOME = expanduser('~')
+json_file_path = f'{HOME}/.config/arrange.json'
 ext = Extensions(json_file_path)
 
 
@@ -61,20 +61,20 @@ def main():
 
         clean_directory(directory.dir_path)
     else:
-        clean_directory(f'{home}/Downloads')
+        clean_directory(f'{HOME}/Downloads')
 
 
 def setup_json():
     print("This is the first time for the program to run...")
     print("adding extensions to json file...")
-    ext.add_extensions(DIR(f'{home}/Pictures'), {'jpg', 'jpeg', 'png', 'gif'})
-    ext.add_extensions(DIR(f'{home}/Documents'), {'doc', 'docx', 'pdf', 'csv', 'xlsx'})
-    ext.add_extensions(DIR(f'{home}/Videos'), {'mp4', 'mkv'})
-    ext.add_extensions(DIR(f'{home}/Music'), {'mp3'})
+    ext.add_extensions(DIR(f'{HOME}/Pictures'), {'jpg', 'jpeg', 'png', 'gif'})
+    ext.add_extensions(DIR(f'{HOME}/Documents'), {'doc', 'docx', 'pdf', 'csv', 'xlsx'})
+    ext.add_extensions(DIR(f'{HOME}/Videos'), {'mp4', 'mkv'})
+    ext.add_extensions(DIR(f'{HOME}/Music'), {'mp3'})
     ext.write_json_file()
     print("done!")
     print('Cleaning your Downloads folder...')
-    clean_directory(f'{home}/Downloads')
+    clean_directory(f'{HOME}/Downloads')
     print('DONE')
 
 
