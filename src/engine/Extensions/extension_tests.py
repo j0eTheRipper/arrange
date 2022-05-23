@@ -61,7 +61,7 @@ def test_dir_removal():
     remove_json_file()
 
 
-def test_extension_re_addition():
+def test_extension_duplication_in_child_dirs():
     remove_json_file()
     ext = Extensions('./arrange.json', 'abc', {'alpha', 'beta', 'gama'})
     ext.add_extensions(DIR('abc/b'), {'beta'})
@@ -87,6 +87,21 @@ def test_removing_the_only_extension():
         assert file == {}
     remove_json_file()
 
+
+def test_extension_duplication_in_separate_dirs():
+    """testing the addition of an already-existing extension in a separate directory
+    ie: not a child to the directory that already has the extension"""
+    remove_json_file()
+    abc = DIR('abc').dir_path
+    _def = DIR('def')
+    ext = Extensions('./arrange.json', 'abc', {'a', 'b'})
+    ext.add_extensions(_def, {'a'})
+    ext.write_json_file()
+
+    with open('./arrange.json') as json_file:
+        file = load(json_file)
+        assert file[abc] == ['b'] and 'a' not in file[abc]
+        assert file[_def.dir_path] == ['a']
 
 def remove_json_file():
     if 'arrange.json' in listdir('.'):

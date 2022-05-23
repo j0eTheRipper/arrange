@@ -34,9 +34,9 @@ class Extensions:
         """Adds the extensions to the json object without writing to the file"""
         self.extensions = defaultdict(set, self.extensions)
 
-        for ancestor in directory.dir_ancestors:
-            if ancestor in self.extensions:
-                self.extensions[ancestor] -= extensions
+        for dir_key in self.extensions:
+            if extensions <= self.extensions[dir_key]:
+                self.extensions[dir_key] -= extensions
 
         self.extensions[directory.dir_path] |= extensions
 
