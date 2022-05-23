@@ -16,11 +16,11 @@ def test_dir_ancestor():
     remove_existing_directory('abc')
     new_directory = DIR('abc')
 
-    assert new_directory.dir_ancestors == {'/home/j0e/Projects/Python/automation_scripts/arrange/classes',
-                                           '/home/j0e/Projects/Python/automation_scripts/arrange',
-                                           '/home/j0e/Projects/Python/automation_scripts',
-                                           '/home/j0e/Projects/Python',
-                                           '/home/j0e/Projects'}
+    assert new_directory.dir_ancestors == {'/HOME/j0e/Projects/Python/automation_scripts/arrange/classes',
+                                           '/HOME/j0e/Projects/Python/automation_scripts/arrange',
+                                           '/HOME/j0e/Projects/Python/automation_scripts',
+                                           '/HOME/j0e/Projects/Python',
+                                           '/HOME/j0e/Projects'}
 
 
 def remove_existing_directory(directory):
