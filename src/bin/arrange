@@ -4,9 +4,9 @@ from os.path import isfile, expanduser
 from argparse import ArgumentParser
 from sys import exit
 
-from src.engine.DIR.DIR import DIR
-from src.engine.Extensions.Extensions import Extensions
-from src.engine.File.File import File
+from engine.DIR.DIR import DIR
+from engine.Extensions.Extensions import Extensions
+from engine.File.File import File
 
 parser = ArgumentParser(description='Arrange the given directory')
 parser.add_argument('-d', '--dir', help='For specifying a directory')
@@ -14,7 +14,7 @@ parser.add_argument('-d', '--dir', help='For specifying a directory')
 parser.add_argument('-ae', '--add_ext',
                     help='add a hyphen separated list of filetypes to a directory (specified using -d)')
 parser.add_argument('-re', '--remove_ext',
-                    help='Omit a hyphen separated list of filetypes from being cleaned (specified using -d)')
+                    help='Omit a hyphen separated list of filetypes from being cleaned')
 parser.add_argument('-r', '--remove_directory',
                     help='Omit the given directory having filetypes added to')
 
@@ -43,14 +43,9 @@ def main():
             print('Specify directory using -d argument')
             exit()
     elif args.remove_ext:
-        if args.dir:
-            directory, extensions_set = setup(args.dir, args.remove_ext)
-
-            ext.remove_extensions(directory, extensions_set)
-            ext.write_json_file()
-        else:
-            print('Specify directory using -d argument')
-            exit()
+        extensions_set = setup_extensions_set(args.remove_ext)
+        ext.remove_extensions(extensions_set)
+        ext.write_json_file()
     elif args.remove_directory:
         directory = setup_dir(args.remove_directory)
 
@@ -66,7 +61,7 @@ def main():
 
 def setup_json():
     print("This is the first time for the program to run...")
-    print("adding extensions to json file...")
+    print("adding dir_ext_map to json file...")
     ext.add_extensions(DIR(f'{HOME}/Pictures'), {'jpg', 'jpeg', 'png', 'gif'})
     ext.add_extensions(DIR(f'{HOME}/Documents'), {'doc', 'docx', 'pdf', 'csv', 'xlsx'})
     ext.add_extensions(DIR(f'{HOME}/Videos'), {'mp4', 'mkv'})

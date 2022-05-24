@@ -18,7 +18,7 @@ class File:
             self.__move_file_to_destination()
 
     def __get_directory_to_extensions_dict(self):
-        """Gets the directory --> extensions dictionary from the json file"""
+        """Gets the directory --> dir_ext_map dictionary from the json file"""
         with open(self.__json_file, 'r') as extensions:
             dir_ext = load(extensions)
 

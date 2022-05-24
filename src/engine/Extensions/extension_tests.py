@@ -32,7 +32,7 @@ def test_extension_removal():
     remove_json_file()
 
     ext = Extensions('./arrange.json', 'abc', ['abc', 'cba'])
-    ext.remove_extensions(DIR('abc'), {'cba'})
+    ext.remove_extensions({'cba'})
     ext.write_json_file()
 
     with open('arrange.json') as arrange:
@@ -79,7 +79,7 @@ def test_removing_the_only_extension():
     """testing the removal of the only extension in an extension list."""
     remove_json_file()
     ext = Extensions('./arrange.json', 'abc', {'abc'})
-    ext.remove_extensions(DIR('abc'), {'abc'})
+    ext.remove_extensions({'abc'})
     ext.write_json_file()
 
     with open('./arrange.json') as json_file:
