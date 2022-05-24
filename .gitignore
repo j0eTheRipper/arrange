@@ -114,7 +114,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
+# C dir_ext_map
 *.so
 
 # Distribution / packaging
@@ -249,3 +249,5 @@ dmypy.json
 cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm
+
+arrange.json
