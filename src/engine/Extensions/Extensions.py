@@ -45,15 +45,13 @@ class Extensions:
         extensions = set(extensions)
         dir_ = ''
         for directory, ext_set in self.dir_ext_map.items():
-            if extensions < ext_set:
+            if extensions & ext_set:
                 self.dir_ext_map[directory] -= extensions
                 dir_ = directory
                 break
 
         if len(self.dir_ext_map[dir_]) == 0:
-            print('reached here!!')
             del self.dir_ext_map[dir_]
-            print(self.dir_ext_map)
 
     def remove_directory(self, directory: DIR):
         if self.dir_ext_map.get(directory.dir_path):
